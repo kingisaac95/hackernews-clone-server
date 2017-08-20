@@ -1,0 +1,27 @@
+{
+  "name": "hackernews-clone-server",
+  "version": "1.0.0",
+  "description": "A graphql backend clone of hacker news",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingisaac95/hackernews-clone-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kingisaac95/hackernews-clone-server/issues"
+  },
+  "homepage": "https://github.com/kingisaac95/hackernews-clone-server#readme",
+  "dependencies": {
+    "apollo-server-express": "^1.1.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "graphql": "^0.10.5",
+    "graphql-tools": "^1.2.1"
+  }
+}
