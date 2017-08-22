@@ -29,6 +29,7 @@ const typeDefs = `
   type Mutation {
     createLink(url: String!, description: String!): Link
     createUser(name: String!, authProvider: AuthProviderSignupData!): User
+    signinUser(email: AUTH_PROVIDER_EMAIL): SigninPayload!
   }
 
   type SigninPayload {
