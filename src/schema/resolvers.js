@@ -1,4 +1,7 @@
-// const jwt = require('')
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 module.exports = {
   Query: {
@@ -27,8 +30,14 @@ module.exports = {
     },
     signinUser: async (root, data, {mongo: {Users}}) => {
       const user = await Users.findOne({email: data.email.email});
+      const userData = {email: user.email,id: user.id};
       if (data.email.password === user.password) {
-        return {token: `token-${user.email}`, user}
+        const token = jwt.sign({
+          exp: Math.floor(Date.now() / 1000) + (60 * 60),
+          userData
+        }, process.env.TOKEN_HASH_SECRETE);
+        
+        return {token, user};
       }
     }
   },
