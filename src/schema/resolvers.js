@@ -1,26 +1,34 @@
-const links = [
-  {
-    id: 1,
-    url: 'https://github.com/kingisaac95/',
-    description: 'Developer Evangelist'
-  },
-  {
-    id: 2,
-    url: 'https://github.com/kingisaac95/hackernews-clone-server',
-    description: 'Hackernews Clone'
-  },
-];
-
 module.exports = {
   Query: {
-    allLinks: () => links,
+    allLinks: async (root, data, {mongo: {Links}}) => {
+      return await Links.find({}).toArray();
+    },
+    allUsers: async (root, data, {mongo: {Users}}) => {
+      return await Users.find({}).toArray();
+    }
   },
 
   Mutation: {
-    createLink: (_, data) => {
-      const newLink = Object.assign({id: links.length + 1}, data);
-      links.push(newLink);
-      return newLink;
+    createLink: async (root, data, {mongo: {Links}}) => {
+      const response = await Links.insert(data);
+      return Object.assign({id: response.insertedIds[0]}, data);
+    },
+    createUser: async (root, data, {mongo: {Users}}) => {
+      const newUser = {
+        name: data.name,
+        email: data.authProvider.email.email,
+        password: data.authProvider.email.password
+      };
+
+      const response = await Users.insert(newUser);
+      return Object.assign({id: response.insertedIds[0]}, data);
     }
+  },
+
+  Link: {
+    id: root => root._id || root.id
+  },
+  User: {
+    id: root => root._id || root.id
   },
 };
